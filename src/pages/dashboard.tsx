@@ -2,6 +2,7 @@ import { Header } from "@/components/Header";
 import { Sidebar } from "@/components/Sidebar";
 import { Box, Flex, SimpleGrid, Text, theme } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 
 const Chart = dynamic(() => import('react-apexcharts'), {
     ssr: false,
@@ -59,6 +60,12 @@ const series = [
 ]
 
 export default function Dashboard() {
+  const [assembleGraphics, setAssembleGraphics] = useState(false)
+
+  useEffect(() => {
+    setAssembleGraphics(true)
+  },[])
+
     return (
         <Flex direction='column' h='100vh'>
             <Header />
@@ -66,6 +73,7 @@ export default function Dashboard() {
             <Flex w='100%' my='6' maxWidth={1480} mx='auto' px='6'>
                 <Sidebar />
 
+                { assembleGraphics && (
                 <SimpleGrid flex='1' gap='4' minChildWidth='320px' alignItems='flex-start'>
                     <Box 
                         p='8'
@@ -89,6 +97,7 @@ export default function Dashboard() {
                     </Box>
             
                 </SimpleGrid>
+                ) }
             </Flex>
         </Flex>
     )
